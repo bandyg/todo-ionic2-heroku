@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      MEAN Ionic 2 Todo App
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home" padding>
+    <h2>Add a Todo</h2>
+    <ion-item no-lines>
+        <ion-input #newTodo type="text" (keyup.enter)="addTodo(newTodo.value); newTodo.value=''" placeholder="Add a new todo..."></ion-input>
+        <button (click)="addTodo(newTodo.value); newTodo.value=''" ion-button clear large item-right>
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-item>
+
+    <h2>Todo List <small>Swipe a todo to edit or delete</small></h2>
+    <ion-list no-lines>
+        <ion-item-sliding #slidingItem *ngFor="let todo of todos; let index = index">
+                <ion-item>
+                    <ion-checkbox (click)="toggleComplete(todo)" [checked]="todo.isComplete"></ion-checkbox>
+                    <ion-item text-wrap item-left [class.completed]="todo.isComplete">
+                        {{ todo.description }}
+                    </ion-item>
+                </ion-item>
+                <ion-item-options (ionSwipe)="navToEdit(todo, index);">
+                    <button ion-button (click)="navToEdit(todo, index); slide(slidingItem);">Edit</button>
+                    <button ion-button color="danger" (click)="deleteTodo(todo, index)">
+                        <ion-icon name="trash"></ion-icon>
+                    </button>
+                </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+</ion-content>
